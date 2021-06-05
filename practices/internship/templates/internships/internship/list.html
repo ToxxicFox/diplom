@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if area %}
+        {{ area.title }} практики
+    {% else %}
+        Все практики
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>
+    {% if area %}
+        {{ area.title }} практики
+    {% else %}
+        Все практики
+    {% endif %}
+</h1>
+<div class="contents">
+    <h3>Сферы</h3>
+    <ul id="modules">
+        <li {% if not area %}class="selected"{% endif %}>
+            <a href="{% url 'internship_list' %}">Все</a>
+        </li>
+        {% for s in areas %}
+            <li {% if area == s %}class="selected"{% endif %}>
+                <a href="{% url 'internship_list_area' s.slug %}">
+                    {{ s.title }}
+                    <br><span>{{ s.total_internships }} практики</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="module">
+    {% for internship in internships %}
+        {% with area=internship.area %}
+            <h3><a href="{% url 'internship_detail' internship.slug %}">{{ internship.title }}</a></h3>
+            <p>
+                <a href="{% url 'internship_list_area' area.slug %}">{{ area }}</a>.
+                {{ internship.total_modules }} модулей.
+                Преподаватель: {{ internship.owner.get_full_name }}
+            </p>
+        {% endwith %}
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+    {% with area=internship.area %}
+        <h1>
+            {{ object.title }}
+        </h1>
+        <div class="module">
+            <h2>Описание</h2>
+            <p>
+                <a href="{% url 'internship_list_area' area.slug %}">
+                    {{ area.title }}
+                </a>.
+                {{ internship.modules.count }} модулей.
+                Преподаватель: {{ internship.owner.get_full_name }}
+            </p>
+            {{ object.overview|linebreaks }}
+            {% if request.user.is_authenticated %}
+                <form action="{% url 'student_enroll_internship' %}" method="POST">
+                    {{ enroll_form }}
+                    {% csrf_token %}
+                    <input type="submit" class="button" value="Зачислиться сейчас">
+                </form>
+            {% else %}
+                <a href="{% url 'student_registration' %}" class="button">
+                    Зарегистрируйтесь, чтобы зачислиться
+                </a>
+            {% endif %}
+        </div>
+    {% endwith %}
+{% endblock %}

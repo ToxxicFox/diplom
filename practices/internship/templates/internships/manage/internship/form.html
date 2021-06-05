@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}
+        Изменить практику "{{ object.title }}"
+    {% else %}
+        Создать новую практику
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {% if object %}
+            Изменить практику "{{ object.title }}"
+        {% else %}
+            Создать новую практику
+        {% endif %}
+    </h1>
+    <div class="module">
+        <h2>Информация о практике</h2>
+        <form action="." method="POST">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Сохранить практику"></p>
+        </form>
+    </div>
+{% endblock %}

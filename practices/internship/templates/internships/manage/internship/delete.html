@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить практику{% endblock %}
+
+{% block content %}
+    <h1>Удалить практику "{{ object.title }}"</h1>
+
+    <div class="module">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p>Вы уверены, что хотите удалить практику "{{ object }}"?</p>
+            <input type="submit" class="button" value="Подтвердить">
+        </form>
+    </div>
+{% endblock %}

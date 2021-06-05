@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Мои практики{% endblock %}
+
+{% block content %}
+    <h1>Мои практики</h1>
+
+    <div class="module">
+        {% for internship in object_list %}
+            <div class="course-info">
+                <h3>{{ internship.title }}</h3>
+                <p><a href="{% url 'student_internship_detail' internship.id %}">Доступ к содержимому</a></p>
+            </div>
+        {% empty %}
+            <p>
+                Вы пока что не зачислены ни на одну из практик
+                <a href="{% url 'internship_list' %}">Выберете практику</a>, чтобы зачислиться. 
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

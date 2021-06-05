@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Мои практики{% endblock %}
+
+{% block content %}
+    <h1>Мои практики</h1>
+
+    <div class="module">
+        {% for internship in object_list %}
+            <div class="course-info">
+                <h3>{{ internship.title }}</h3>
+                <p>
+                    <a href="{% url 'internship_edit' internship.id %}">Изменить</a>
+                    <a href="{% url 'internship_delete' internship.id %}">Удалить</a>
+                    <a href="{% url 'internship_module_update' internship.id %}">Изменить модули</a>
+                    {% if internship.modules.count > 0 %}
+                        <a href="{% url 'module_content_list' internship.modules.first.id %}">
+                            Управлять содержимым
+                        </a>
+                    {% endif %}
+                </p>
+            </div>
+        {% empty %}
+            <p>У вас пока нет активных практик</p>
+        {% endfor %}
+        <p>
+            <a href="{% url 'internship_create' %}" class="button">Создать новую практику</a>
+        </p>
+    </div>
+{% endblock %}
